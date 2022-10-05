@@ -23,8 +23,15 @@ zindle：基于go-zero开发的bookstore "kindle"
 2. 环境准备
    1. 运行环境
       - [ ] mysql
+         docker pull mysql5.7
+         docker run -d -p 3306:3306 --privileged=true -v /mydata/mysql/log:/var/log/mysql -v /mydata/mysql/data:/var/lib/mysql -v /mydata/mysql/conf:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=123456  --name mysql mysql:5.7
       - [ ] redis
+         docker pull redis
+         docker run --restart=always --log-opt max-size=100m --log-opt max-file=2 -p 6379:6379 --name myredis -v /mydata/redis/myredis/myredis.conf:/etc/redis/redis.conf -v /mydata/redis/myredis/data:/data -d redis redis-server /etc/redis/redis.conf  --appendonly yes  --requirepass 123456
       - [ ] etcd
+         docker pull quay.io/coreos/etcd
+         docker run -itd -p 2379:2379 --restart=always --name etcd quay.io/coreos/etcd /usr/local/bin/etcd --advertise-client-urls http://0.0.0.0:2379 --listen-client-urls http://0.0.0.0:2379
+
       - [ ] kubernetes1.20.1
    2. 前端开发
       - [ ] nodejs
@@ -74,10 +81,10 @@ https://org.modao.cc/app/aa11e8c03777a7653d18145be11b7f3e70eb1a13#screen=skow3pw
 1. app直接用hbuilder打开
    1. 开启模拟器调度
 2. backend用goland打开
-   1. k8s
-   2. backend-rpc
-   3. backend-api
-   4. bookstore
+   1. k8s            cd backend/service/k8s/cmd/api & go run k8s.go etc/k8s-api.yaml  
+   2. backend-rpc    cd backend/service/backend/cmd/rpc/systemuserget & go run systemuserget.go -f etc/systemuserget.yaml
+   3. backend-api    cd backend/service/backend/cmd/api & go run admin.go -f etc/admin-api.yaml
+   4. bookstore      cd backend/service/bookstore/cmd/api & go run books.go etc/books-api.yaml
 3. backendweb用vscode打开
    1. 使用cnpm install命令安装相关依赖包
 
@@ -134,15 +141,3 @@ https://org.modao.cc/app/aa11e8c03777a7653d18145be11b7f3e70eb1a13#screen=skow3pw
 3. ElementUI vue相关组件 https://element.eleme.cn
    
    后台界面相关组件参考此源码库官方文档
-
-### 10.3. 个人wx（备注zindle）
-![image-20210524151130130](https://user-images.githubusercontent.com/20268389/119350257-b3766680-bcd1-11eb-8c20-56ad40a03803.png)
-
-
-### 10.4. zindle交流群（不要闲聊）
-![zindle交流群](https://user-images.githubusercontent.com/20268389/120781070-49748180-c55b-11eb-8607-3a6bbbd066a4.jpeg)
-
-
-### 10.5. 欢迎star
-
-如果本系统能给你带来帮助，麻烦给我一个star。
